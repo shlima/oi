@@ -6,12 +6,13 @@ import (
 )
 
 type (
-	String = sql.NullString
-	Int64  = sql.NullInt64
-	Int32  = sql.NullInt32
-	Time   = sql.NullTime
-	Date   = sql.NullTime
-	Bool   = sql.NullBool
+	String  = sql.NullString
+	Int64   = sql.NullInt64
+	Int32   = sql.NullInt32
+	Float64 = sql.NullFloat64
+	Time    = sql.NullTime
+	Date    = sql.NullTime
+	Bool    = sql.NullBool
 )
 
 func NewValidString(input string) String {
@@ -32,6 +33,14 @@ func NewValidInt32(input int32) Int32 {
 
 func NewAutoInt32(input int32) Int32 {
 	return Int32{Int32: input, Valid: input != 0}
+}
+
+func NewValidFloat64(input float64) Float64 {
+	return Float64{Float64: input, Valid: true}
+}
+
+func NewAutoFloat64(input float64) Float64 {
+	return Float64{Float64: input, Valid: input != 0}
 }
 
 func NewAutoTime(input time.Time) Time {
