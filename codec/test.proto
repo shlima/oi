@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package codec;
+
+option go_package = "./codec";
+
+message TestProto {
+  string title = 2;
+}
