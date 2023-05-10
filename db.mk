@@ -20,7 +20,7 @@ db-create:
 	goose -dir migrations postgres "$(PG_DSN)" create $(NAME) sql
 
 db-up:
-	goose -dir migrations postgres "$(PG_DSN)" up
+	goose -dir migrations -allow-missing postgres "$(PG_DSN)" up
 
 db-down:
 	goose -dir migrations postgres "$(PG_DSN)" down
