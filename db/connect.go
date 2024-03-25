@@ -2,9 +2,8 @@ package db
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 // Connect to to database, example DSN:
@@ -16,10 +15,5 @@ import (
 // - pool_max_conn_idle_time
 // - pool_health_check_period
 func Connect(ctx context.Context, dsn string) (*Pool, error) {
-	config, err := pgxpool.ParseConfig(dsn)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse DSN: %w", err)
-	}
-
-	return pgxpool.ConnectConfig(ctx, config)
+	return pgxpool.New(ctx, dsn)
 }

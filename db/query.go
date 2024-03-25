@@ -4,11 +4,14 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/georgysavva/scany/pgxscan"
+	"github.com/georgysavva/scany/v2/pgxscan"
+	"github.com/jackc/pgx/v5"
 )
 
 func WithTx(ctx context.Context, db IDB, fn func(tx Tx) error) error {
-	return db.BeginFunc(ctx, fn)
+	return pgx.BeginFunc(ctx, db, func(tx pgx.Tx) error {
+		return fn(tx)
+	})
 }
 
 // Select вернет много строк

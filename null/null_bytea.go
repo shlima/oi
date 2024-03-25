@@ -2,7 +2,7 @@ package null
 
 import (
 	"database/sql/driver"
-	"github.com/jackc/pgtype"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Bytea struct {
@@ -12,14 +12,14 @@ type Bytea struct {
 
 // Scan implements the Scanner interface.
 func (n *Bytea) Scan(value any) error {
-	oid := new(pgtype.Bytea)
+	oid := new(pgtype.Bits)
 	err := oid.Scan(value)
 	if err != nil {
 		return err
 	}
 
 	n.Bytes = oid.Bytes
-	n.Valid = oid.Status == pgtype.Present
+	n.Valid = oid.Valid
 
 	return nil
 }

@@ -3,9 +3,9 @@ package db
 import (
 	"context"
 
-	"github.com/jackc/pgconn"
-	"github.com/jackc/pgx/v4"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 var ErrNotFound = pgx.ErrNoRows
@@ -26,5 +26,4 @@ type IDB interface {
 	Query(ctx context.Context, sql string, args ...interface{}) (Rows, error)
 	QueryRow(ctx context.Context, sql string, args ...interface{}) Row
 	Exec(ctx context.Context, sql string, arguments ...interface{}) (CommandTag, error)
-	BeginFunc(ctx context.Context, f func(Tx) error) error
 }
