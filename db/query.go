@@ -46,13 +46,18 @@ func Get(ctx context.Context, db IDB, dest interface{}, query Sqlizer) error {
 
 // Exec will execute SQL statement
 func Exec(ctx context.Context, db IDB, query Sqlizer) error {
+	_, err := ExecCmd(ctx, db, query)
+	return err
+}
+
+// Exec will execute SQL statement
+func ExecCmd(ctx context.Context, db IDB, query Sqlizer) (CommandTag, error) {
 	stmt, args, err := query.ToSql()
 	if err != nil {
-		return fmt.Errorf("SQL builder failed: %w", err)
+		return CommandTag{}, fmt.Errorf("SQL builder failed: %w", err)
 	}
 
-	_, err = db.Exec(ctx, stmt, args...)
-	return err
+	return db.Exec(ctx, stmt, args...)
 }
 
 // QueryRow returns exactly one Row or throws ErrNotFound
