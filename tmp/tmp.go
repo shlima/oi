@@ -2,7 +2,6 @@ package tmp
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -22,13 +21,13 @@ func (t *Tmp) Close() error {
 	var e1, e2 error
 
 	for _, file := range t.files {
-		if err := os.Remove(file.Name()); err != nil && e1 != nil {
+		if err := os.Remove(file.Name()); err != nil {
 			e1 = err
 		}
 	}
 
 	for _, dir := range t.dirs {
-		if err := os.RemoveAll(dir); err != nil && e2 != nil {
+		if err := os.RemoveAll(dir); err != nil {
 			e2 = err
 		}
 	}
@@ -44,7 +43,7 @@ func (t *Tmp) Close() error {
 }
 
 func (t *Tmp) Dir(name string) (dir string, err error) {
-	dir, err = ioutil.TempDir("", fmt.Sprintf("%s.*", name))
+	dir, err = os.MkdirTemp("", fmt.Sprintf("*.%s", name))
 	if err != nil {
 		return dir, fmt.Errorf("failed to create temp dir: %w", err)
 	}
@@ -54,7 +53,7 @@ func (t *Tmp) Dir(name string) (dir string, err error) {
 }
 
 func (t *Tmp) File(name string) (file *os.File, err error) {
-	file, err = ioutil.TempFile("", fmt.Sprintf("%s.*", name))
+	file, err = os.CreateTemp("", fmt.Sprintf("*.%s", name))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create temp file: %w", err)
 	}

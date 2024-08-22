@@ -28,7 +28,7 @@ func TestTmp_Dir(t *testing.T) {
 	})
 }
 
-func TestTmp_Ашду(t *testing.T) {
+func TestTmp_File(t *testing.T) {
 	t.Run("it works", func(t *testing.T) {
 		tmp := New()
 		file1, err1 := tmp.File("uno")
